@@ -8,16 +8,29 @@
 </head>
 <body>
 <script>
-    
+    function checkpass(){
+        if(document.getElementById('password').value != document.getElementById('password1').value){
+            document.getElementById('invalidpassmessage').style.display = "block";
+            return false;
+        }
+        else{
+            document.getElementById('invalidpassmessage').style.display = "hide";
+            return true;
+        }
+
+    }
 </script>
 <div class="container">
     <div class="row">
         <div class="col-md-6 col-md-offset-3">
             <h2 class="text-center">Register</h2>
-            <form method="POST" action="/register">
+            <form class="form-signin " method="POST" action="/register" onsubmit="return checkpass()">
                 <div class="form-group">
                     <label for="username">Username:</label>
-                    <input type="text" class="form-control" id="username" name="username" required>
+                    <input type="text" class="form-control" id="username" name="username" value="{{username}}" required>
+                    <p class="text-center text-danger">
+                        {{message}}
+                    </p>
                 </div>
                
                 <div class="form-group">
@@ -26,8 +39,9 @@
                 </div>
                 
                 <div class="form-group">
-                    <label for="password1">Re-type Password:</label>
+                    <label for="password1">Confirm Password:</label>
                     <input type="password" class="form-control" id="password1" name="password1" required>
+                    <div id="invalidpassmessage" class="collapse">Passwords don't match</div>
                 </div>
                 <button type="submit" class="btn btn-primary btn-block" onclick="">Register</button>
             </form>

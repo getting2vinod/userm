@@ -69,22 +69,21 @@ def register():
         password = request.form['password']
 
         if not username or not password:
-            flash("All fields are required!", "danger")
-            return redirect('/register')
+            return render_template('register.html', message="All fields are required!", username=username)
 
         user = get_user(username)
         if user:
             flash("User already exists!", "warning")
-            return redirect('/register')
+            return render_template('register.html', message="User already exists!", username=username)
 
         hashed_password = encrypt_with_hash(password)
         
         write_user(username,hashed_password,"","")
+        return render_template('landing.html', message="Registration successful!")
 
-        flash("Registration successful!", "success")
-        return redirect('/login')
+    return render_template('register.html', message="", username="")
 
-    return render_template('register.html')
+    
 
 @app.route('/', methods=['GET', 'POST'])
 def redirect():
